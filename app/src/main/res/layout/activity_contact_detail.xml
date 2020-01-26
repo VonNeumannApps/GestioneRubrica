@@ -60,7 +60,7 @@
                     android:background="#88000000">
 
                     <ImageView
-                        android:id="@+id/addImageButton"
+                        android:id="@+id/addProfilePicButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

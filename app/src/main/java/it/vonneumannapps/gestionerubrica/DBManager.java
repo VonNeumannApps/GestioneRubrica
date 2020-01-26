@@ -6,13 +6,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 public class DBManager extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 5;
 
     public static final String CONTACTS_TABLE_NAME = "contacts";
     public static final String ID_COL = "id";
@@ -21,10 +22,17 @@ public class DBManager extends SQLiteOpenHelper {
     public static final String ADDRESS_COL = "postalAddress";
     public static final String PHONE_COL = "phone";
     public static final String EMAIL_COL = "email";
+    public static final String PROFILE_PIC_COL = "immagine";
     public static final String SELECTED_FIELD_NAME = "selected";
 
-    public DBManager(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    private static final String TAG = "DBManager";
+
+    private final Context myContext;
+
+    public DBManager(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
+        this.myContext = context;
     }
 
     // NB onCreate è chiamata solo al primo accesso
@@ -38,14 +46,34 @@ public class DBManager extends SQLiteOpenHelper {
                 SURNAME_COL + " TEXT, " +
                 ADDRESS_COL + " TEXT, " +
                 PHONE_COL + " TEXT, " +
-                EMAIL_COL + " TEXT) ";
+                EMAIL_COL + " TEXT, " +
+                PROFILE_PIC_COL + " BLOB) ";
 
         sqLiteDatabase.execSQL(query);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        // funzionalità che non useremo
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+        Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
+                + newVersion);
+
+        dropTables(sqLiteDatabase, myContext);
+        onCreate(sqLiteDatabase);
+    }
+
+    void dropTables(SQLiteDatabase sqLiteDatabase, Context context){
+        Log.w(TAG,"dropping DB tables..");
+
+            String statement = "DROP TABLE IF EXISTS " + CONTACTS_TABLE_NAME;
+
+            try {
+                sqLiteDatabase.execSQL(statement);
+            } catch (Exception e) {
+                Log.e(TAG, statement);
+                Log.e(TAG, e.toString());
+                throw e;
+            }
+        Log.v(TAG, "Dropped DB schema and data.");
     }
 
     public void insertNewContact(Bundle newContact) {
@@ -70,6 +98,7 @@ public class DBManager extends SQLiteOpenHelper {
         contentValues.put(ADDRESS_COL, newContact.getString(ADDRESS_COL));
         contentValues.put(PHONE_COL, newContact.getString(PHONE_COL));
         contentValues.put(EMAIL_COL, newContact.getString(EMAIL_COL));
+        contentValues.put(PROFILE_PIC_COL, newContact.getByteArray(PROFILE_PIC_COL));
     }
 
     public void updateContact(Bundle contact) {
@@ -109,6 +138,7 @@ public class DBManager extends SQLiteOpenHelper {
                     putStringFromCursorIntoBundle(cur, contact, ADDRESS_COL);
                     putStringFromCursorIntoBundle(cur, contact, PHONE_COL);
                     putStringFromCursorIntoBundle(cur, contact, EMAIL_COL);
+                    putByteArrFromCursorIntoBundle(cur, contact, PROFILE_PIC_COL);
 
                     contact.putBoolean(SELECTED_FIELD_NAME, false);
 
@@ -167,6 +197,13 @@ public class DBManager extends SQLiteOpenHelper {
         int columnIndex = cur.getColumnIndex(columnName); // indice della colonna con nome columName
         String columnValue = cur.getString(columnIndex);
         bundle.putString(columnName, columnValue);
+    }
+
+    static private void putByteArrFromCursorIntoBundle(Cursor cur, Bundle bundle, String columnName){
+
+        int columnIndex = cur.getColumnIndex(columnName);
+        byte[] columnValue = cur.getBlob(columnIndex);
+        bundle.putByteArray(columnName, columnValue);
     }
 
     static private void putIntFromCursorIntoBundle(Cursor cur, Bundle bundle, String columnName){

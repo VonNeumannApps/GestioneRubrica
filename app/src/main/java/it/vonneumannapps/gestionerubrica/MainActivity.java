@@ -35,8 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dbManager = new DBManager(this, DBManager.DATABASE_NAME,
-                null, DBManager.DATABASE_VERSION);
+        dbManager = new DBManager(this);
 
         initContactList();
         initButtonsAddRemoveSelectedContacts();

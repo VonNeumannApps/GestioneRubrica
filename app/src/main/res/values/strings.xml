@@ -25,4 +25,9 @@
     <string name="YES">Si</string>
     <string name="NO">No</string>
 
+    <string name="ACTION_SELECTION_TEXT">Seleziona azione</string>
+
+    <string name="CAMERA_ACTION_TEXT">Fotocamera</string>
+    <string name="GALLERY_ACTION_TEXT">Galleria</string>
+
 </resources>
