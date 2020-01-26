@@ -17,5 +17,12 @@
 
     <string name="CONTACTS_LIST_TITLE">ELENCO CONTATTI</string>
     <string name="SELECT_ALL_BUTTON_LABEL">Seleziona tutti</string>
+    <string name="DESELECT_ALL_BUTTON_LABEL">Deseleziona Tutto</string>
     <string name="DELETE_BUTTON">Elimina</string>
+
+    <string name="DELETE_SUCCESS_MESSAGE">Contatti eliminati con successo!</string>
+    <string name="DELETE_CONFIRMATION_MESSAGE">Sei sicuro di voler eliminare gli elementi selezionati?</string>
+    <string name="YES">Si</string>
+    <string name="NO">No</string>
+
 </resources>

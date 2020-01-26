@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 public class ContactDetailActivity extends AppCompatActivity {
 
+    public static final int ADD_OR_EDIT_CODE = 1000; // numero arbitrario
+
     DBManager dbManager;
     Bundle contact;
 
@@ -56,10 +58,8 @@ public class ContactDetailActivity extends AppCompatActivity {
             titleTV.setText(getString(R.string.NEW_CONTACT_TITLE));
         }
         else {
-            String fullName = contact.getString(DBManager.NAME_COL)
-                    + contact.getString(DBManager.SURNAME_COL);
             titleTV.setText(getString(R.string.EDIT_ACCOUNT_TITLE,
-                    fullName));
+                    Contact.getFullName(contact)));
         }
 
         this.dbManager = new DBManager(this, DBManager.DATABASE_NAME,
