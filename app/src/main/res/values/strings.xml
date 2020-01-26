@@ -14,4 +14,8 @@
     <!--%1$ (1 sta per il primo parametro, $s indica tipo stringa  -->
 
     <string name="SAVED_MESSAGE">Salvataggio effettuato!</string>
+
+    <string name="CONTACTS_LIST_TITLE">ELENCO CONTATTI</string>
+    <string name="SELECT_ALL_BUTTON_LABEL">Seleziona tutti</string>
+    <string name="DELETE_BUTTON">Elimina</string>
 </resources>
