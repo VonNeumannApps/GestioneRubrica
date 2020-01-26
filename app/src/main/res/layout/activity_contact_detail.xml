@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:text="@string/NEW_CONTACT"
+            android:text="@string/NEW_CONTACT_TITLE"
             />
 
     </FrameLayout>
