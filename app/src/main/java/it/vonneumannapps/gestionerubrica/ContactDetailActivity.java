@@ -11,6 +11,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -32,6 +33,7 @@ public class ContactDetailActivity extends AppCompatActivity {
 
     public static final int ADD_OR_EDIT_CODE = 1000; // numero arbitrario
     public static final int TAKE_PICTURE_CODE = 200;
+    public static final int PICK_FROM_GALLERY_CODE = 400;
     public static final int CAMERA_PERMISSION_CODE = 300;
 
     DBManager dbManager;
@@ -67,6 +69,12 @@ public class ContactDetailActivity extends AppCompatActivity {
                 profilePictureIV.setImageBitmap(bitmap);
             }
         }
+    }
+
+    void pickFromGallery() {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, PICK_FROM_GALLERY_CODE);
     }
 
     void takePicture() {
@@ -203,7 +211,7 @@ public class ContactDetailActivity extends AppCompatActivity {
                     checkForCameraPermission();// controlla permessi e poi apre fotocamera
                 }
                 else { //GALLERIA
-                    //TODO
+                    checkForGalleryPermission();
                 }
             }
         });
@@ -212,6 +220,20 @@ public class ContactDetailActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    void checkForGalleryPermission() {
+
+        int myGalleryPermission = ContextCompat.checkSelfPermission(
+                this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if(myGalleryPermission != PackageManager.PERMISSION_GRANTED){
+
+            String[] permissionsToRequest = {Manifest.permission.READ_EXTERNAL_STORAGE};
+            ActivityCompat.requestPermissions(this, permissionsToRequest,
+                    PICK_FROM_GALLERY_CODE);
+        }
+
+        pickFromGallery();
     }
 
     void checkForCameraPermission() {
@@ -253,6 +275,31 @@ public class ContactDetailActivity extends AppCompatActivity {
             int requestCode, int resultCode, @Nullable Intent data) {
 
         switch (requestCode) {
+            case PICK_FROM_GALLERY_CODE : {
+                if(resultCode == RESULT_OK && data != null) {
+                    // Let's read picked image data - its URI
+                    Uri pickedImage = data.getData();
+                    // Let's read picked image path using content resolver
+                    String[] filePath = { MediaStore.Images.Media.DATA };
+                    Cursor cursor = getContentResolver().query(
+                            pickedImage, filePath, null, null, null);
+                    cursor.moveToFirst();
+                    String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
+
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
+
+                    // Do something with the bitmap
+                    profilePictureIV.setImageBitmap(bitmap);
+                    this.hasProfilePicture = true;
+
+                    // At the end remember to close the cursor or you will end with
+                    // the RuntimeException!
+                    cursor.close();
+                }
+                break;
+            }
             case TAKE_PICTURE_CODE : {
                 if(resultCode == RESULT_OK) {
                     String pathName = Utils.getMainDirectory(this).getPath()
