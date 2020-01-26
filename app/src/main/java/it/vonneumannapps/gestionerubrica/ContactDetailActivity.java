@@ -218,9 +218,8 @@ public class ContactDetailActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, permissionsToRequest,
                     CAMERA_PERMISSION_CODE);
         }
-        else {
-            takePicture();
-        }
+
+        takePicture();
     }
 
     @Override
