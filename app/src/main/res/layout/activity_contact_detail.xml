@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ContactDetailActivity">
 
     <FrameLayout
@@ -38,6 +39,36 @@
             android:layout_gravity="center"
             android:padding="10dp"
             >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:padding="10dp"
+                >
+
+                <ImageView
+                    android:id="@+id/locationImageImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/noimg_placeholder"
+                    />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="#88000000">
+
+                    <ImageView
+                        android:id="@+id/addImageButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/baseline_photo_camera_black_36"/>
+
+                </FrameLayout>
+
+            </FrameLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -119,4 +150,4 @@
 
         </LinearLayout>
     </ScrollView>
-</FrameLayout>
+</LinearLayout>
