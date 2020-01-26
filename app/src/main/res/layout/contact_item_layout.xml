@@ -7,11 +7,12 @@
     >
 
     <ImageView
+        android:id="@+id/profilePicThumbnailImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:src="@drawable/baseline_folder_black_36"
-        />//TODO maybe change with contact picture thumbnail
+        />
 
     <LinearLayout
         android:layout_width="0dp"

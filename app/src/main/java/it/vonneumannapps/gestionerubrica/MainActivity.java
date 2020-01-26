@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -176,7 +178,8 @@ public class MainActivity extends AppCompatActivity {
                     // NB: only  API >= 23
                     // getSystemServiceName(LAYOUT_INFLATER_SERVICE);
 
-                    view = inflater.inflate(R.layout.contact_item_layout, viewGroup, false);
+                    view = inflater.inflate(R.layout.contact_item_layout,
+                            viewGroup, false);
                 }
 
                 // recuperare elemento a questa postizione
@@ -188,8 +191,16 @@ public class MainActivity extends AppCompatActivity {
                 fullNameTV.setText(Contact.getFullName(contact));
                 mailTV.setText(Contact.getEmailAndPostal(contact));
 
-                ImageView checkIV = view.findViewById(R.id.checkImageView);
+                byte[] imageBytes = contact.getByteArray(DBManager.PROFILE_PIC_COL);
+                if(imageBytes != null) {
+                    Bitmap sourceBitmap = Utils.convertByteArrayToBitmap(imageBytes);
+                    Bitmap thumbImage = ThumbnailUtils.extractThumbnail(sourceBitmap, 72, 72);
 
+                    ImageView profilePicThumbnailIV = view.findViewById(R.id.profilePicThumbnailImageView);
+                    profilePicThumbnailIV.setImageBitmap(thumbImage);
+                }
+
+                ImageView checkIV = view.findViewById(R.id.checkImageView);
                 // controllo se elemento è selezionato
                 if(Contact.isSelected(contact)) {
                     checkIV.setVisibility(View.VISIBLE);

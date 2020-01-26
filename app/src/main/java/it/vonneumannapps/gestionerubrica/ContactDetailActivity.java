@@ -38,6 +38,7 @@ public class ContactDetailActivity extends AppCompatActivity {
     Bundle contact;
 
     ImageView profilePictureIV;
+    boolean hasProfilePicture;
 
     EditText nameET;
     EditText surnameET;
@@ -60,8 +61,11 @@ public class ContactDetailActivity extends AppCompatActivity {
             this.emailET.setText(contact.getString(DBManager.EMAIL_COL));
 
             byte[] imageBytes = contact.getByteArray(DBManager.PROFILE_PIC_COL);
-            Bitmap bitmap = Utils.convertByteArrayToBitmap(imageBytes);
-            profilePictureIV.setImageBitmap(bitmap);
+            if(imageBytes != null) {
+                this.hasProfilePicture = true;
+                Bitmap bitmap = Utils.convertByteArrayToBitmap(imageBytes);
+                profilePictureIV.setImageBitmap(bitmap);
+            }
         }
     }
 
@@ -161,10 +165,12 @@ public class ContactDetailActivity extends AppCompatActivity {
         contact.putString(DBManager.PHONE_COL, phoneET.getText().toString());
         contact.putString(DBManager.EMAIL_COL, emailET.getText().toString());
 
-        BitmapDrawable bitmapDrawable
-                = (BitmapDrawable) profilePictureIV.getDrawable();
-        Bitmap bitmap = bitmapDrawable.getBitmap();
-        contact.putByteArray(DBManager.PROFILE_PIC_COL, Utils.convertBitmapToByteArray(bitmap));
+        if(hasProfilePicture) {
+            BitmapDrawable bitmapDrawable
+                    = (BitmapDrawable) profilePictureIV.getDrawable();
+            Bitmap bitmap = bitmapDrawable.getBitmap();
+            contact.putByteArray(DBManager.PROFILE_PIC_COL, Utils.convertBitmapToByteArray(bitmap));
+        }
 
         if(isNewAccount) {
             dbManager.insertNewContact(contact);
@@ -258,7 +264,7 @@ public class ContactDetailActivity extends AppCompatActivity {
                     bitmap = BitmapFactory.decodeFile(tempFile.getPath());
 
                     profilePictureIV.setImageBitmap(bitmap);
-
+                    this.hasProfilePicture = true;
                     // TODO saveLocation()
 
                     // int jpegQuality = 5;
