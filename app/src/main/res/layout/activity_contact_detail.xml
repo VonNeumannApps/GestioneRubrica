@@ -1,9 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ContactDetailActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:padding="10dp"
+        android:background="@color/customColor"
+        >
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="@string/NEW_CONTACT"
+            />
+
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/NAME_LABEL"
+                />
+
+            <EditText
+                android:id="@+id/nameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:inputType="textPersonName"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/SURNAME_LABEL"
+                />
+
+            <EditText
+                android:id="@+id/surnameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:inputType="textPersonName"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ADDRESS_LABEL"
+                />
+
+            <EditText
+                android:id="@+id/addressEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:inputType="textPostalAddress"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/PHONE_NUMBER_LABEL"
+                />
+
+            <EditText
+                android:id="@+id/phoneEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:inputType="phone"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/EMAIL_LABEL"
+                />
+
+            <EditText
+                android:id="@+id/emailEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                />
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/SAVE_LABEL"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">GestioneRubrica</string>
+
+    <string name="NEW_CONTACT">NUOVO CONTATTO</string>
+    <string name="NAME_LABEL">Nome:</string>
+    <string name="SURNAME_LABEL">Cognome:</string>
+    <string name="ADDRESS_LABEL">Indirizzo:</string>
+    <string name="PHONE_NUMBER_LABEL">Telefono:</string>
+    <string name="EMAIL_LABEL">Email:</string>
+    <string name="SAVE_LABEL">Salva</string>
 </resources>
